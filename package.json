@@ -1,7 +1,7 @@
 {
-  "name": "electron-react",
-  "version": "1.1.7",
-  "description": "electron-react脚手架工程",
+  "name": "neo-gui-front",
+  "version": "0.0.1",
+  "description": "A NEO Full-Node GUI",
   "main": "main.js",
   "build-config": {
     "appid": "001",
@@ -9,15 +9,16 @@
     "env": "development"
   },
   "scripts": {
-    "start": "npm run compile-main && cross-env NODE_ENV=development node ./scripts/server.js",
+    "start": "npm run compile:main && npm run compile:dev",
     "clean": "rm -rf dist && rm -rf render_process && rm -rf main_process",
     "eslint": "echo \"代码检测中...\" && eslint  *.js --cache",
-    "eslint-fix": "npm run --silent eslint -- --fix; exit 0",
+    "eslint:fix": "npm run --silent eslint -- --fix",
     "build-win": "electron-builder --win --ia32",
     "build-mac": "electron-builder -mwl",
-    "compile": "npm run compile-main && npm run compile-render",
-    "compile-main": "babel -D ./main -d ./main_process",
-    "compile-render": "webpack --config ./scripts/webpack-prod.js --color --progress",
+    "compile": "npm run compile:main && npm run compile:render",
+    "compile:main": "babel -D ./main -d ./main_process",
+    "compile:render": "webpack --config ./scripts/webpack-prod.js --color --progress",
+    "develop": "webpack-dev-server --config ./scripts/webpack-dev.js --color --progress",
     "pack-mac": "npm run clean && npm run compile && npm run build-mac",
     "pack-win": "npm run clean && npm run compile && npm run build-win",
     "build": "npm run pack-win"

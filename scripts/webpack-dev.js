@@ -12,11 +12,11 @@ const config = Object.assign({}, webpackConfig, {
     ],
   },
   output: Object.assign(webpackConfig.output, {
-    path: path.join(process.cwd(), 'assets'),
+    path: path.join(process.cwd(), 'build'),
     publicPath: `http://localhost:${PORT}/`,
   }),
   devServer: {
-    contentBase: './assets/',
+    contentBase: './build/',
     historyApiFallback: true,
     hot: true,
     port: PORT,
@@ -24,7 +24,7 @@ const config = Object.assign({}, webpackConfig, {
     stats: {
       colors: true,
     },
-    setup() {
+    before() {
       spawn(
         'electron',
         ['.'],
@@ -38,6 +38,21 @@ const config = Object.assign({}, webpackConfig, {
       )
         .on('close', () => process.exit(0))
         .on('error', spawnError => console.error(spawnError));
+
+      spawn(
+          'dotnet',
+          ['./neo-cli/neo-cli.dll'],
+          {
+            shell: true,
+            env: Object.assign({
+              PORT: 4000,
+            }, process.env),
+            stdio: 'inherit',
+          }
+        )
+          .on('message', message => console.log(`From CLI: ${message}`))
+          .on('close', () => process.exit(0))
+          .on('error', spawnError => console.error(spawnError));
     },
   },
   cache: true,

@@ -16,7 +16,7 @@ app.set('view engine', 'pug');
 const compiler = webpack(webpackConfig);
 app.use(require('webpack-dev-middleware')(compiler, webpackConfig.devServer));
 app.use(require('webpack-hot-middleware')(compiler, {
-  log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000,
+  log: console.log, path: '/__webpack_hmr', heartbeat: 1 * 1000,
 }));
 
 app.listen(PORT);

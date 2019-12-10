@@ -35,3 +35,8 @@ dist
 
 main_process
 render_process
+
+Chain_*/*
+neo-cli/Chain_*/*
+yarn.lock
+!*.dll
